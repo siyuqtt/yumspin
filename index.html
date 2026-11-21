@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>YumSpin — Decide What to Eat</title>
+  <meta name="description" content="Swipe food staples, tune the Guilt-o-Meter, and cook simple meals with step-by-step illustrations." />
+  <meta name="theme-color" content="#fff9f2" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="YumSpin" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-badge" aria-hidden="true">
+          <img src="assets/icons/icon-192.png" alt="" />
+        </span>
+        <div>
+          <h1 class="brand-title">YumSpin</h1>
+          <p class="brand-subtitle" id="headerSubtitle">Swipe to pick your meal trio</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="audio-toggles" role="group" aria-label="Audio controls">
+          <button class="audio-btn" id="btnToggleMusic" type="button" aria-pressed="true" aria-label="Toggle background music" title="Background music">
+            <span class="audio-icon">🎵</span>
+          </button>
+          <button class="audio-btn" id="btnToggleSfx" type="button" aria-pressed="true" aria-label="Toggle sound effects" title="Sound effects">
+            <span class="audio-icon">🔊</span>
+          </button>
+        </div>
+        <div class="step-pills" role="tablist" aria-label="App steps">
+          <button class="step-pill active" id="stepPill1" data-step="1" role="tab" aria-selected="true">
+            <span class="step-num">1</span> Pick
+          </button>
+          <button class="step-pill" id="stepPill2" data-step="2" role="tab" aria-selected="false">
+            <span class="step-num">2</span> Cook
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- SCREEN 1: INGREDIENT PICKER -->
+    <main id="screenPick" class="screen active" aria-label="Pick ingredients">
+      <div class="swipe-hint" id="swipeHint">
+        <span>👆 Swipe cards, tap <strong>1/10</strong> to browse all, or hit <strong>Reshuffle</strong></span>
+      </div>
+
+      <section class="deck-stack" id="deckStack">
+        <!-- Carb Deck -->
+        <article class="category-card theme-carb" data-category="carb">
+          <div class="category-header">
+            <div class="category-header-left">
+              <span class="category-pill">Carb</span>
+              <button class="count-btn" data-picker-toggle="carb" type="button" aria-expanded="false" aria-label="Browse all carb choices">
+                <span data-count="carb">1 / 10</span>
+                <span class="count-chevron" aria-hidden="true">▾</span>
+              </button>
+            </div>
+            <div class="category-header-right">
+              <div class="deck-dots" data-dots="carb" role="tablist" aria-label="Carb choices"></div>
+              <button class="lock-btn" data-lock="carb" aria-label="Lock carb selection" title="Lock this ingredient">
+                <span class="lock-icon">🔓</span>
+              </button>
+            </div>
+          </div>
+          <div class="swipe-stage" data-stage="carb">
+            <button class="nav-arrow nav-prev" data-prev="carb" aria-label="Previous carb">‹</button>
+            <div class="swipe-track" data-track="carb">
+              <!-- Populated by JS -->
+            </div>
+            <button class="nav-arrow nav-next" data-next="carb" aria-label="Next carb">›</button>
+          </div>
+          <div class="quick-picker" data-picker="carb" hidden></div>
+        </article>
+
+        <!-- Veggie Deck -->
+        <article class="category-card theme-veggie" data-category="veggie">
+          <div class="category-header">
+            <div class="category-header-left">
+              <span class="category-pill">Veggie</span>
+              <button class="count-btn" data-picker-toggle="veggie" type="button" aria-expanded="false" aria-label="Browse all veggie choices">
+                <span data-count="veggie">1 / 10</span>
+                <span class="count-chevron" aria-hidden="true">▾</span>
+              </button>
+            </div>
+            <div class="category-header-right">
+              <div class="deck-dots" data-dots="veggie" role="tablist" aria-label="Veggie choices"></div>
+              <button class="lock-btn" data-lock="veggie" aria-label="Lock veggie selection" title="Lock this ingredient">
+                <span class="lock-icon">🔓</span>
+              </button>
+            </div>
+          </div>
+          <div class="swipe-stage" data-stage="veggie">
+            <button class="nav-arrow nav-prev" data-prev="veggie" aria-label="Previous veggie">‹</button>
+            <div class="swipe-track" data-track="veggie">
+              <!-- Populated by JS -->
+            </div>
+            <button class="nav-arrow nav-next" data-next="veggie" aria-label="Next veggie">›</button>
+          </div>
+          <div class="quick-picker" data-picker="veggie" hidden></div>
+        </article>
+
+        <!-- Protein Deck -->
+        <article class="category-card theme-protein" data-category="protein">
+          <div class="category-header">
+            <div class="category-header-left">
+              <span class="category-pill">Protein</span>
+              <button class="count-btn" data-picker-toggle="protein" type="button" aria-expanded="false" aria-label="Browse all protein choices">
+                <span data-count="protein">1 / 10</span>
+                <span class="count-chevron" aria-hidden="true">▾</span>
+              </button>
+            </div>
+            <div class="category-header-right">
+              <div class="deck-dots" data-dots="protein" role="tablist" aria-label="Protein choices"></div>
+              <button class="lock-btn" data-lock="protein" aria-label="Lock protein selection" title="Lock this ingredient">
+                <span class="lock-icon">🔓</span>
+              </button>
+            </div>
+          </div>
+          <div class="swipe-stage" data-stage="protein">
+            <button class="nav-arrow nav-prev" data-prev="protein" aria-label="Previous protein">‹</button>
+            <div class="swipe-track" data-track="protein">
+              <!-- Populated by JS -->
+            </div>
+            <button class="nav-arrow nav-next" data-next="protein" aria-label="Next protein">›</button>
+          </div>
+          <div class="quick-picker" data-picker="protein" hidden></div>
+        </article>
+      </section>
+
+      <div class="action-bar">
+        <button class="btn btn-secondary" id="btnReshuffle">
+          <span class="btn-icon" id="shuffleIcon">🎲</span>
+          <span>Reshuffle</span>
+        </button>
+        <button class="btn btn-primary" id="btnCookThis">
+          <span>How to Cook</span>
+          <span class="btn-icon">→</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- SCREEN 2: HOW TO COOK STUDIO -->
+    <main id="screenCook" class="screen" aria-label="How to cook" hidden>
+      <!-- Selected Trio Summary Bar -->
+      <section class="trio-summary-card">
+        <button class="back-chip" id="btnBackToPick" aria-label="Back to ingredients">
+          ← Change
+        </button>
+        <div class="trio-mini-list" id="trioMiniList">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- Adaptive Cozy Music Mood Bar -->
+      <button class="music-mood-bar" id="musicMoodBar" type="button" aria-label="Toggle cozy cooking music">
+        <span class="eq-bars" id="eqBars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+        <span class="music-mood-text" id="musicMoodText">☀️ Sunny Kitchen · 104 BPM · Cozy Duo</span>
+        <span class="music-mood-action" id="musicMoodAction">Playing</span>
+      </button>
+
+      <!-- Guilt-o-Meter Slider -->
+      <section class="control-card calorie-card">
+        <div class="calorie-top">
+          <div>
+            <span class="control-eyebrow">Guilt-o-Meter</span>
+            <div class="tier-row">
+              <span class="tier-badge" id="tierBadge">Balanced</span>
+              <span class="tier-vibe" id="tierVibe">Everyday healthy &amp; tasty</span>
+            </div>
+          </div>
+          <div class="kcal-readout">
+            <span class="kcal-number" id="kcalNumber">520</span>
+            <span class="kcal-unit">kcal</span>
+          </div>
+        </div>
+
+        <div class="slider-wrap">
+          <input
+            type="range"
+            id="calorieSlider"
+            class="calorie-slider"
+            min="0"
+            max="100"
+            step="1"
+            value="35"
+            aria-label="Guilt-o-Meter from Monk Mode to Deluxe"
+          />
+          <div class="slider-stops" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+
+        <div class="slider-labels">
+          <button class="slider-end-btn" id="btnSnapEconomy" type="button">
+            <span class="end-title">🧘 Monk Mode</span>
+            <span class="end-sub">Strict &amp; lean</span>
+          </button>
+          <button class="slider-end-btn align-right" id="btnSnapDeluxe" type="button">
+            <span class="end-title">Deluxe 🧈</span>
+            <span class="end-sub">All for flavor</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Complexity & Time Controls with + / - buttons -->
+      <section class="metrics-grid">
+        <!-- Complexity Control -->
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-label">Complexity</span>
+            <span class="metric-sublabel" id="complexityLabel">Easy</span>
+          </div>
+          <div class="metric-stepper-row">
+            <button class="stepper-btn" id="btnComplexityMinus" aria-label="Decrease complexity">−</button>
+            <div class="metric-display" id="complexityDisplay">
+              <div class="complexity-dots" id="complexityDots" aria-hidden="true"></div>
+              <span class="metric-value" id="complexityValue">2 / 5</span>
+            </div>
+            <button class="stepper-btn" id="btnComplexityPlus" aria-label="Increase complexity">+</button>
+          </div>
+        </div>
+
+        <!-- Time Control -->
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-label">Time</span>
+            <span class="metric-sublabel" id="timeLabel">Quick weeknight</span>
+          </div>
+          <div class="metric-stepper-row">
+            <button class="stepper-btn" id="btnTimeMinus" aria-label="Decrease cooking time">−</button>
+            <div class="metric-display">
+              <span class="time-clock" aria-hidden="true">⏱️</span>
+              <span class="metric-value" id="timeValue">20 min</span>
+            </div>
+            <button class="stepper-btn" id="btnTimePlus" aria-label="Increase cooking time">+</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Generated Recipe / Cooking Method Card -->
+      <section class="recipe-card" id="recipeCard">
+        <div class="recipe-header">
+          <div class="recipe-method-row">
+            <span class="method-pill" id="methodPill">🍳 One-Pan Stir-Fry</span>
+            <button class="alt-style-btn" id="btnAltStyle" title="Switch cooking variation">
+              ↻ Try another style
+            </button>
+          </div>
+          <h2 class="recipe-title" id="recipeTitle">Garlicky Rice, Broccoli &amp; Egg Skillet</h2>
+          <p class="recipe-desc" id="recipeDesc"></p>
+
+          <div class="recipe-macros" id="recipeMacros">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <div class="recipe-section">
+          <h3 class="section-heading">✨ Flavor Boosters &amp; Pantry</h3>
+          <div class="boosters-list" id="boostersList">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <div class="recipe-section">
+          <div class="section-heading-row">
+            <h3 class="section-heading">👩‍🍳 Simple Steps</h3>
+            <span class="steps-progress" id="stepsProgress">0 / 4 done</span>
+          </div>
+          <div class="plate-preview" id="platePreview" aria-live="polite">
+            <!-- Live dish preview built as you check off steps -->
+          </div>
+          <ol class="steps-list" id="stepsList">
+            <!-- Populated by JS -->
+          </ol>
+        </div>
+
+        <div class="chef-tip" id="chefTip">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Optional Mobile Install Bar (hidden when already installed / native) -->
+    <div class="install-bar" id="installBar" hidden>
+      <div class="install-bar-text" id="installBarText">Add YumSpin to your home screen for offline use</div>
+      <div class="install-bar-actions">
+        <button class="install-btn" id="btnInstallApp" type="button">Install</button>
+        <button class="install-dismiss" id="btnDismissInstall" type="button" aria-label="Dismiss install tip">✕</button>
+      </div>
+    </div>
+
+    <footer class="app-footer">
+      <a class="footer-link" href="privacy.html">Privacy Policy</a>
+    </footer>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

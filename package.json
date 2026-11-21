@@ -1,0 +1,28 @@
+{
+  "name": "yumspin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "YumSpin — Decide what to eat and how to cook it (PWA + Android & iOS via Capacitor)",
+  "scripts": {
+    "build:web": "node scripts/prepare-web.mjs",
+    "cap:assets": "npx capacitor-assets generate --iconBackgroundColor \"#FEDFB3\" --splashBackgroundColor \"#FEDFB3\"",
+    "cap:sync": "npm run build:web && npx cap sync",
+    "android:init": "npm run build:web && npx cap add android && npm run cap:assets && npx cap sync android",
+    "android:open": "npx cap open android",
+    "ios:init": "npm run build:web && npx cap add ios && npm run cap:assets && npx cap sync ios",
+    "ios:open": "npx cap open ios",
+    "serve": "python3 -m http.server 8081 --bind 127.0.0.1"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/app": "^6.0.2",
+    "@capacitor/core": "^6.2.0",
+    "@capacitor/ios": "^6.2.0",
+    "@capacitor/splash-screen": "^6.0.3",
+    "@capacitor/status-bar": "^6.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^6.2.0"
+  }
+}

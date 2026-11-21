@@ -1,0 +1,29 @@
+{
+  "appId": "com.bbdeng.yumspin",
+  "appName": "YumSpin",
+  "webDir": "www",
+  "backgroundColor": "#FFF9F2",
+  "ios": {
+    "contentInset": "automatic",
+    "preferredContentMode": "mobile",
+    "backgroundColor": "#FFF9F2"
+  },
+  "android": {
+    "backgroundColor": "#FFF9F2",
+    "allowMixedContent": false
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 900,
+      "launchAutoHide": true,
+      "backgroundColor": "#FEDFB3",
+      "showSpinner": false,
+      "splashFullScreen": true,
+      "splashImmersive": false
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#FFF9F2"
+    }
+  }
+}

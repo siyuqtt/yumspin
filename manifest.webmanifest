@@ -1,0 +1,32 @@
+{
+  "name": "YumSpin — Decide What to Eat",
+  "short_name": "YumSpin",
+  "description": "Swipe food staples, tune the Guilt-o-Meter, and cook simple meals with step-by-step illustrations.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FEDFB3",
+  "theme_color": "#FFF9F2",
+  "categories": ["food", "lifestyle", "health"],
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
